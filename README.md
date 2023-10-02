@@ -3,7 +3,7 @@ StarCCM+ Design Manager submission for cluster with SLURM job scheduler.
 This project is currently a work in progress. 
 
 This design manager submission is a "General Job Submission" as per the Star-CCM+ manual. If you would
-like to use a pre-allocation job submission visit: <insert REPO>
+like to use a pre-allocation job submission visit: "REPO Work in Progress"
 
 
 The current version supported is V18.02.2018-R8, although other versions may work. This submission
