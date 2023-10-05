@@ -13,12 +13,14 @@ other job schedulers (PBS, SLURM, etc) or different Star-CCM+ configurations (MP
 # Running a job
 Before running a job, ensure that "Linux Cluster" is selected inside the Design Manager project under
 single resource for each design study. The submit.sh script takes care of modifying the compute
-resource properties.
+resource properties via the "sed" commands.
 
 The general job submission uses two scripts: submit.sh and runStarDM.sh. The submit.sh script is the
 main script that needs to be modified. Most of the settings will be changed under "Simulation Settings"
 and additional modifications, such as creating directories or other personal scripts can be created 
 under "Extra Settings". Small modifications may need to be made to the rest of the script.
+
+*NOTE: Ensure that you add your POD key or license server details
 
 The submit.sh script is submitted to the job scheduler first via "sbatch submit.sh". This script opens
 up a design manager job on a single node (preferable to select a weaker node). This node will be responsible
