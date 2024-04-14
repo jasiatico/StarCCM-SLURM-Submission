@@ -3,8 +3,9 @@
 
 #################### Job Settings #################################################################
 # Specific Commands for the work load manager SLURM are lines beginning with "#SBATCH"
+# For SBATCH lines. Double pound sign is commented out. Single pound is uncommented.
 
-#SBATCH -t 48:00:00                     # Set walltime for DM submission in hhh:mm:ss
+#SBATCH -t 10:00:00                     # Set walltime for DM submission in hhh:mm:ss
 #SBATCH -J template_run                 # Set display name for job submission
 #SBATCH --output=output.%j.star_run     # Set output name
 

@@ -3,8 +3,9 @@
 
 #################### Job Settings #################################################################
 # Specific Commands for the work load manager SLURM are lines beginning with "#SBATCH"
+# For SBATCH lines. Double pound sign is commented out. Single pound is uncommented.
 
-#SBATCH -t 100:00:00                    # Set walltime for DM submission in hhh:mm:ss
+#SBATCH -t 10:00:00                    # Set walltime for DM submission in hhh:mm:ss
 #SBATCH --ntasks=1                      # Set number of cores (Design Manager only runs in serial)
 #SBATCH -J template_DM                  # Set display name for job submission
 #SBATCH --output=output.%j.starccmDM    # Set output name
