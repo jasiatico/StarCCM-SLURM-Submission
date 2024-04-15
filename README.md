@@ -10,7 +10,11 @@ is designed to work with our cluster, so minor changes may need to be made for o
 other job schedulers (PBS, SLURM, etc) or different Star-CCM+ configurations (MPI, etc).
 
 # Single run (No Design Manager)
-WIP
+The single run submission is for cases where you only want to submit a single simulation without the
+use of Design Manager. This submission only has one submission file: singlerun.sh. To submit to the
+cluster, ensure the sim file, any macros, and the singlerun.sh file are all in the same directory.
+Modify the Job Settings and Simulation Settings in the script then use the following command:
+"sbatch singlerun.sh"
 
 
 # General Job Submission (Design Manager)
