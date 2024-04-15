@@ -40,7 +40,7 @@ WORKDIR=$PWD
 #################### Simulation Settings ##########################################################
 
 ## Name of sim file. Must be in the WORKDIR
-PROJECTFILE = "NACA0012.sim"
+SIMFILE = "NACA0012.sim"
 
 ## Name of the output file
 OUTPUTFILE = "sim.out"
@@ -49,10 +49,57 @@ OUTPUTFILE = "sim.out"
 ## Note: You can list mesh and run as inputs along with java macros
 MACROS="RotateBody.java,mesh,run,PostProcess.java"
 
-###NOT FINISHED
+## License options. POD vs. License Server
+# Comment to use POD key
+LICS="-licpath <LICENSESERVER>"
+# Uncomment to use POD key
+PERSONAL_PODKEY="<PODKEY>"
+#LICS="-podkey $PERSONAL_PODKEY -licpath 1999@flex.cd-adapco.com"
+###################################################################################################
+
+
+#################### Extra Settings ###############################################################
+## Add additional settings here (Creating directories, etc)
+# mkdir results
+
+# Create a directory and place a file that contains the list of nodes used
+mkdir machineFiles 
+MACHINEFILE="machineFiles/machinefile.$SLURM_JOBID.txt"
+scontrol show hostnames $SLURM_JOB_NODELIST > $MACHINEFILE 
 ###################################################################################################
 
 
 
+### The rest of the script should not require user input. Although certain clusters may need script
+### revisions. For example, PBS vs. SLURM or the type of MPI used for Star-CCM+.
 
+
+
+######### Running the simulation ##################################################################
+# Load Modules and purge any other modules
+module purge
+module load starccm/starccm-18.02.008-R8
+
+
+# Start job timer
+echo "$(date)" >> job.timer
+
+# run star-ccm+ with settings above
+starccm+ -np $SLURM_NTASKS -pio -rsh ssh -machinefile $MACHINEFILE -power -licpath $LICS -batch $MACROS $SIMFILE &> "$OUTPUTFILE"
+
+# End job timer
+echo "$(date)" >> job.timer
+
+
+# Calculate elapsed time
+start_timestamp=$(date -d "$start_time" +%s)
+end_timestamp=$(date -d "$end_time" +%s)
+elapsed_time=$((end_timestamp - start_timestamp))
+formatted_elapsed_time=$(date -u -d @"$elapsed_time" +'%H hours %M minutes %S seconds')
+
+# Report mesh statistics to stat.out file
+grep 'Cells:' sim.out | awk 'END {print "Number of cells: " $2}' &>>stat.out
+echo "Start Time: $start_time" >> stat.out
+echo "End Time: $end_time" >> stat.out
+echo "Elapsed Time: $formatted_elapsed_time" >> stat.out
 
